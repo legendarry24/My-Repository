@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace When_someone_owes_you_money
 {
@@ -11,7 +11,7 @@ namespace When_someone_owes_you_money
             // you can change the values above to use your own data
             while (true)
             {
-                Console.Write("Do you wish use loaded data? (yes/no) "); 
+                Console.Write("Do you wish use loaded data? (yes/no) ");
                 string answer = Console.ReadLine();
                 if (answer == "no")   // if you answer "no", you'll have to write another data
                 {
@@ -44,7 +44,7 @@ namespace When_someone_owes_you_money
             int days = int.Parse(difference.ToString("%d"));
             Console.WriteLine(days + " days later");
             Console.WriteLine("Initial sum = " + sum + " euro, " +
-                "percentage - " + percentage + " euros per month");
+                              "percentage - " + percentage + " euros per month");
             if (days >= 30)
             {
                 while (days >= 30)
