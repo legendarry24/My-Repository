@@ -15,7 +15,10 @@ $PSVersionTable
 # or
 powercfg /batteryreport /output "C:\battery-report.html"
 
-#build sln
+# run via CMD
+# build sln
+msbuild C:\Projects\ProjectName\SolutionName.sln /p:DebugSymbols=false /p:DebugType=None /p:RunCodeAnalysis=false /p:AllowedReferenceRelatedFileExtensions=none /p:DeployOnBuild=true /p:PublishProfile=Setup /flp:verbosity="diagnostic" /p:PublishBasePath="D\Test"
+
 msbuild SolutionName.sln /flp:verbosity="diagnostic" /p:TrackFileAccess=false /p:DebugSymbols=false /p:DebugType=None /p:DeployOnBuild=true /p:PublishProfile=Setup /p:RunCodeAnalysis=false /p:AllowedReferenceRelatedFileExtensions=none
 
 msbuild /flp:verbosity="diagnostic" /p:TrackFileAccess=false /p:DebugSymbols=false /p:DebugType=None /p:DeployOnBuild=true /p:PublishProfile=Deploy /p:RunCodeAnalysis=false /p:AllowedReferenceRelatedFileExtensions=none
