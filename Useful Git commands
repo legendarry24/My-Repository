@@ -1,0 +1,15 @@
+Example of Using Personal Access Token to work with Gitlab:
+Example of the token value: dcX7Vzxiz4GWLPXBxZEH
+
+Git clone:
+git clone https://oauth2:ACCESS_TOKEN@somegitlab.com/vendor/package.git
+git clone https://oauth2:dcX7Vzxiz4GWLPXBxZEH@gitlab.somedomain.com/some-path/some-repository.git
+
+Git push:
+git push https://gitlab-ci-token:<access_token>@gitlab.com/myuser/myrepo.git <branch_name>
+git push https://my-Gitlab-token:dcX7Vzxiz4GWLPXBxZEH@gitlab.somedomain.com/some-path/some-repository.git some_branch_name
+
+Alt. solution:
+Right now if you attempt to import from GitHub Enterprise or some other site that uses self-signed certs, you have to: Set verify_ssl to false
+Disable SSL verification in Git via:
+git config --global http.sslVerify false
