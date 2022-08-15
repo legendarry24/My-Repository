@@ -1,7 +1,7 @@
 # get disks volumes
 #Set-ExecutionPolicy RemoteSigned;
-Get-Volume | 
-  where { -not ([string]::IsNullOrWhiteSpace($_.DriveLetter)) } | 
+Get-Volume |
+  where { -not ([string]::IsNullOrWhiteSpace($_.DriveLetter)) } |
   foreach { Write-Host "Drive: $($_.DriveLetter). Used size: $(($_.Size/1gb) - ($_.SizeRemaining/1gb)) GB" -BackgroundColor Black -ForegroundColor DarkGreen }
 
 # check .Net version
@@ -40,3 +40,15 @@ if ($lastexitcode -gt 7) {
 } else {
 	write-host "Robocopy succeeded! Exit code:" $lastexitcode
 }
+
+
+# Example of using the BitsTransfer
+# BitsTransfer can be used to download big files via network with the ability to continue downloading after a network failure
+# Start download:
+Start-BitsTransfer -Source "http://server01/servertestdir/testfile1.txt" -Destination "c:\clienttestdir\testfile1.txt" -Asynchronous
+# Check status:
+Get-BitsTransfer
+# Continue downloading after a network failure:
+Get-BitsTransfer | Resume-BitsTransfer
+# Finish download:
+Get-BitsTransfer | Complete-BitsTransfer
