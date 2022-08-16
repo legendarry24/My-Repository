@@ -1,3 +1,24 @@
+-- Applying Select Distinct to One Column Only
+SELECT *
+FROM (
+	SELECT [ID],
+		   [Name],
+		   ROW_NUMBER() OVER(PARTITION BY [Name] ORDER BY [ID] DESC) RowNumber
+	FROM [UserRole]
+) a
+WHERE RowNumber = 1
+
+
+-- Verify if SQL command is correct before executing
+BEGIN TRAN
+	DELETE MyTable WHERE ID = 1
+ROLLBACK
+
+
+-- Displays the definition of a stored procedure
+sp_helpText MyProcedure
+
+
 ALTER AUTHORIZATION ON DATABASE::[DataBaseName] TO sa; -- устранить ошибку dbo не существует
 
 DBCC CHECKIDENT ("[dbo].[TableName]", RESEED, 0) -- Изменяем значение IDENTITY на 0
@@ -9,7 +30,7 @@ GO
 SELECT * FROM INFORMATION_SCHEMA.COLUMNS;
 GO
 
-SELECT 
+SELECT
    ORDINAL_POSITION
   ,TABLE_CATALOG
   ,TABLE_NAME
@@ -22,13 +43,6 @@ FROM INFORMATION_SCHEMA.COLUMNS
 ORDER BY TABLE_NAME
 GO
 
--- delete last row (works if ID type is int)
-DELETE FROM tableName
-WHERE ID = (SELECT MAX(ID) FROM tableName)
-GO
--- Добавить к текстовой переменной '%', чтобы его не пришлось вводить при вызове процедуры
-SELECT @Name = RTRIM(@Name)	+ '%'; 
-GO
 -- по умолчанию у всех таблиц префикс [dbo]. Но можно создать пользовательский префикс,
 -- для более удобной группировки таблиц.
 -- также в папке [DatabaseName]/Security/Schemas есть список всех доступных схем,
@@ -59,9 +73,11 @@ SELECT
 	SERVERPROPERTY('Edition') AS Edition,
 	SERVERPROPERTY('ProductVersion') AS ProductVersion
 
+
 SELECT GETDATE() as 'local time'
 SELECT GETUTCDATE() as 'UTC'
 SELECT CURRENT_TIMESTAMP
+
 
 -- this script will list the number of rows and the space used by data rows (and the total space used) 
 -- for all tables in your database
@@ -117,6 +133,7 @@ SELECT COLUMN_NAME AS 'ColumnName',
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE COLUMN_NAME LIKE '%column_name%'
 
+
 -- script to change DB name
 ALTER DATABASE [OldDbName]
 SET SINGLE_USER WITH ROLLBACK IMMEDIATE
@@ -126,4 +143,14 @@ MODIFY NAME = NewDbName
 
 ALTER DATABASE [NewDbName]
 SET MULTI_USER WITH ROLLBACK IMMEDIATE
+GO
+
+
+-- delete last row (works if ID type is int)
+DELETE FROM tableName
+WHERE ID = (SELECT MAX(ID) FROM tableName)
+GO
+
+-- Добавить к текстовой переменной '%', чтобы его не пришлось вводить при вызове процедуры
+SELECT @Name = RTRIM(@Name)	+ '%'; 
 GO
