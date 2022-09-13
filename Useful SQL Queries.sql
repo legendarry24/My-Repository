@@ -1,17 +1,17 @@
 -- Applying Select Distinct to One Column Only
 SELECT *
 FROM (
-	SELECT [ID],
-		   [Name],
-		   ROW_NUMBER() OVER(PARTITION BY [Name] ORDER BY [ID] DESC) RowNumber
-	FROM [UserRole]
+    SELECT [ID],
+           [Name],
+           ROW_NUMBER() OVER(PARTITION BY [Name] ORDER BY [ID] DESC) RowNumber
+    FROM [UserRole]
 ) a
 WHERE RowNumber = 1
 
 
 -- Verify if SQL command is correct before executing
 BEGIN TRAN
-	DELETE MyTable WHERE ID = 1
+    DELETE MyTable WHERE ID = 1
 ROLLBACK
 
 
@@ -127,9 +127,9 @@ DROP DATABASE DbName
 GO
 
 SELECT COLUMN_NAME AS 'ColumnName',
-			 TABLE_NAME AS  'TableName',
-			 TABLE_CATALOG,
-			 TABLE_SCHEMA
+       TABLE_NAME AS  'TableName',
+       TABLE_CATALOG,
+       TABLE_SCHEMA
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE COLUMN_NAME LIKE '%column_name%'
 
@@ -145,6 +145,16 @@ ALTER DATABASE [NewDbName]
 SET MULTI_USER WITH ROLLBACK IMMEDIATE
 GO
 
+
+-- a query to select all people who own 2 or more cars with model year 2007 or newer
+-- result set includes FirstName, LastName and TotalCars
+SELECT p.FirstName, p.LastName, COUNT(c.Manufacturer) TotalCars
+FROM Person p
+JOIN Cars c ON p.id = c.OwnerId
+WHERE c.Year >= 2007
+GROUP BY p.id
+HAVING COUNT(c.Manufacturer) > 2
+GO
 
 -- delete last row (works if ID type is int)
 DELETE FROM tableName
