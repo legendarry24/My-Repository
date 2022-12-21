@@ -4,6 +4,9 @@ Get-Volume |
   where { -not ([string]::IsNullOrWhiteSpace($_.DriveLetter)) } |
   foreach { Write-Host "Drive: $($_.DriveLetter). Used size: $(($_.Size/1gb) - ($_.SizeRemaining/1gb)) GB" -BackgroundColor Black -ForegroundColor DarkGreen }
 
+# Restart Explorer
+Stop-Process -ProcessName explorer
+
 # check .Net version
 reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\full" /v version
 
